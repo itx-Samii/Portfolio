@@ -38,6 +38,7 @@ const translations = {
     form_email: "Your Email",
     form_message: "Project Details",
     form_submit: "Launch Project",
+    form_submitting: "Sending...",
     nav_projects: "Projects",
     projects_subtitle: "Case Studies",
     projects_title: "Featured Projects",
@@ -86,6 +87,7 @@ const translations = {
     form_email: "Aapka Email",
     form_message: "Project Ki Details",
     form_submit: "Project Launch Karein",
+    form_submitting: "Bheja ja raha hai...",
     nav_projects: "Projects",
     projects_subtitle: "Case Studies",
     projects_title: "Hamare Khas Projects",
@@ -696,3 +698,80 @@ animate();
 window.addEventListener("load", () => {
   ScrollTrigger.refresh();
 });
+
+// ==========================================
+// 4. GOOGLE SHEETS FORM SUBMISSION
+// ==========================================
+// Replace this with your Google Apps Script Web App URL after deployment
+const GOOGLE_SHEET_SCRIPT_URL = ""; 
+
+const contactForm = document.getElementById("contact-form");
+if (contactForm) {
+  contactForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const messageInput = document.getElementById("message");
+    const submitBtn = contactForm.querySelector(".submit-btn");
+    
+    if (!nameInput || !emailInput || !messageInput || !submitBtn) return;
+    
+    const originalBtnText = translations[currentLang].form_submit;
+    const loadingBtnText = translations[currentLang].form_submitting;
+    
+    // Disable inputs and button
+    submitBtn.disabled = true;
+    submitBtn.textContent = loadingBtnText;
+    nameInput.disabled = true;
+    emailInput.disabled = true;
+    messageInput.disabled = true;
+    
+    // Form data
+    const formData = new URLSearchParams();
+    formData.append("name", nameInput.value);
+    formData.append("email", emailInput.value);
+    formData.append("message", messageInput.value);
+    
+    if (!GOOGLE_SHEET_SCRIPT_URL) {
+      // Fallback if URL is not configured yet
+      console.warn("Google Apps Script URL is not set. Simulating form submission.");
+      setTimeout(() => {
+        alert(currentLang === "en" ? "Message sent successfully! (Demo Mode: Google Sheet URL not configured yet)" : "Aapka message bheja gaya! (Demo Mode: Google Sheet URL abhi set nahi hai)");
+        
+        // Reset form
+        contactForm.reset();
+        
+        // Re-enable
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+        nameInput.disabled = false;
+        emailInput.disabled = false;
+        messageInput.disabled = false;
+      }, 1000);
+      return;
+    }
+    
+    fetch(GOOGLE_SHEET_SCRIPT_URL, {
+      method: "POST",
+      body: formData,
+      mode: "no-cors"
+    })
+    .then(() => {
+      alert(currentLang === "en" ? "Message sent successfully! Thank you." : "Aapka message kamyabi se bheja gaya! Shukriya.");
+      contactForm.reset();
+    })
+    .catch((error) => {
+      console.error("Submission error:", error);
+      alert(currentLang === "en" ? "Failed to send message. Please try again." : "Message bhejne mein galti hui. Dobara koshish karein.");
+    })
+    .finally(() => {
+      // Re-enable
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalBtnText;
+      nameInput.disabled = false;
+      emailInput.disabled = false;
+      messageInput.disabled = false;
+    });
+  });
+}
