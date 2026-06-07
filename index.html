@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="NexusTech is an elite software service agency building conversational AI Chatbots, custom offline/online software, and stunning 3D animated websites.">
+  <meta name="keywords" content="Software Agency, AI Chatbots, SaaS, Custom Software, Three.js, GSAP Animations, Web Development, Portfolio">
+  <meta name="author" content="NexusTech Agency">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nexustech.agency/">
+  <meta property="og:title" content="NexusTech | Premium 3D Animated Software Agency">
+  <meta property="og:description" content="We build custom high-performance software, intelligent AI Chatbots, and immersive 3D/2D animation-heavy websites that convert.">
+  <meta property="og:image" content="https://nexustech.agency/assets/og-image.jpg">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://nexustech.agency/">
+  <meta property="twitter:title" content="NexusTech | Premium 3D Animated Software Agency">
+  <meta property="twitter:description" content="We build custom high-performance software, intelligent AI Chatbots, and immersive 3D/2D animation-heavy websites that convert.">
+  <meta property="twitter:image" content="https://nexustech.agency/assets/og-image.jpg">
+
+  <title>NexusTech - Premium 3D Animated Software Service Agency</title>
+  
+  <!-- Font Preconnections for Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- Error Console Overlay for Debugging -->
+  <div id="debug-error-console" style="display:none; position:fixed; top:0; left:0; width:100%; background:rgba(220,38,38,0.95); color:white; padding:15px; font-family:monospace; z-index:99999; font-size:14px; border-bottom:3px solid #7f1d1d; max-height:200px; overflow-y:auto;">
+    <div style="font-weight:bold; margin-bottom:5px; border-bottom:1px solid rgba(255,255,255,0.3); padding-bottom:5px;">⚠️ JavaScript Error Console:</div>
+    <div id="debug-error-list"></div>
+  </div>
+  <script>
+    window.addEventListener('error', function(e) {
+      var consoleEl = document.getElementById('debug-error-console');
+      var listEl = document.getElementById('debug-error-list');
+      if(consoleEl && listEl) {
+        consoleEl.style.display = 'block';
+        var item = document.createElement('div');
+        item.style.marginBottom = '5px';
+        item.textContent = e.message + ' (' + e.filename.split('/').pop() + ':' + e.lineno + ')';
+        listEl.appendChild(item);
+      }
+    });
+  </script>
+
+  <!-- Custom Cursor Elements -->
+  <div class="custom-cursor" id="cursor"></div>
+  <div class="custom-cursor-dot" id="cursor-dot"></div>
+
+  <!-- Ambient background elements -->
+  <div class="ambient-bg"></div>
+  <div class="ambient-grid"></div>
+
+  <!-- Floating Navbar -->
+  <header>
+    <nav class="navbar" id="navbar" aria-label="Main Navigation">
+      <div class="logo">
+        <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+        <span>Nexus</span>Tech
+      </div>
+      <ul class="nav-links">
+        <li><a href="#hero" data-i18n="nav_home">Home</a></li>
+        <li><a href="#services" data-i18n="nav_services">Services</a></li>
+        <li><a href="#projects" data-i18n="nav_projects">Projects</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+      </ul>
+      <div class="controls-group">
+        <button class="lang-btn" id="lang-toggle" aria-label="Toggle language between English and Roman Urdu">English</button>
+        <a href="#contact" class="contact-btn" data-i18n="nav_cta" aria-label="Get in Touch with NexusTech">Get in Touch</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <!-- Hero Section -->
+    <section class="hero" id="hero" aria-label="Hero Introduction">
+      <div class="hero-3d-wrapper">
+        <div class="model-loader" id="loader">
+          <div class="spinner"></div>
+          <span data-i18n="loading_model">Loading 3D Workspace...</span>
+        </div>
+        <canvas id="hero-canvas"></canvas>
+      </div>
+      <div class="hero-content" id="hero-text-block">
+        <span class="hero-tag" data-i18n="hero_tag">Next-Gen Software Agency</span>
+        <h1 class="hero-title" data-i18n="hero_title">We Build <span>Digital</span> Futures</h1>
+        <p class="hero-desc" data-i18n="hero_desc">Specializing in high-performance AI chatbots, custom offline/online softwares, and stunning animated websites. Drag the laptop to interact with our workspace.</p>
+        <div class="hero-actions">
+          <a href="#services" class="contact-btn" data-i18n="hero_cta_1" aria-label="View our services">Our Services</a>
+          <a href="#contact" class="contact-btn" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--text-primary);" data-i18n="hero_cta_2" aria-label="Talk to us about your project">Talk to Us</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services" aria-label="Our Services">
+      <div class="section-header">
+        <span class="section-subtitle" data-i18n="services_subtitle">Expertise</span>
+        <h2 class="section-title" data-i18n="services_title">Our Software Services</h2>
+        <p class="section-desc" data-i18n="services_desc">Tailored technical solutions designed to automate operations, scale customer engagement, and showcase your brand.</p>
+      </div>
+      
+      <div class="services-grid">
+        <!-- AI Chatbot Card -->
+        <a href="service.html?id=chatbot" class="service-card" style="text-decoration: none;" aria-label="Explore AI Chatbots service">
+          <div>
+            <div class="service-icon">
+              <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                <path d="M8 10h.01"></path>
+                <path d="M12 10h.01"></path>
+                <path d="M16 10h.01"></path>
+              </svg>
+            </div>
+            <h3 class="service-card-title" data-i18n="service_1_title">AI Chatbots</h3>
+            <p class="service-card-desc" data-i18n="service_1_desc">Intelligent, conversational AI assistants integrated into your ecosystem to handle support, leads, and workflows 24/7.</p>
+          </div>
+          <div class="card-footer">
+            <span data-i18n="card_learn_more">Learn More</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </div>
+        </a>
+
+        <!-- Offline Softwares Card -->
+        <a href="service.html?id=offline" class="service-card" style="text-decoration: none;" aria-label="Explore Offline Softwares service">
+          <div>
+            <div class="service-icon">
+              <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                <line x1="8" y1="21" x2="16" y2="21"></line>
+                <line x1="12" y1="17" x2="12" y2="21"></line>
+              </svg>
+            </div>
+            <h3 class="service-card-title" data-i18n="service_2_title">Offline Softwares</h3>
+            <p class="service-card-desc" data-i18n="service_2_desc">Robust, local desktop applications designed for maximum performance, security, and hardware compatibility.</p>
+          </div>
+          <div class="card-footer">
+            <span data-i18n="card_learn_more">Learn More</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </div>
+        </a>
+
+        <!-- Online Softwares Card -->
+        <a href="service.html?id=online" class="service-card" style="text-decoration: none;" aria-label="Explore Online Softwares service">
+          <div>
+            <div class="service-icon">
+              <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 10h-.01"></path>
+                <path d="M20 22H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2z"></path>
+                <path d="M12 18h.01"></path>
+                <path d="M8 6h8"></path>
+                <path d="M8 10h8"></path>
+                <path d="M8 14h8"></path>
+              </svg>
+            </div>
+            <h3 class="service-card-title" data-i18n="service_3_title">Online Softwares</h3>
+            <p class="service-card-desc" data-i18n="service_3_desc">Cloud-powered Web SaaS applications with real-time syncing, high availability, and secure multi-user accessibility.</p>
+          </div>
+          <div class="card-footer">
+            <span data-i18n="card_learn_more">Learn More</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </div>
+        </a>
+
+        <!-- Websites & Animations Card -->
+        <a href="service.html?id=websites" class="service-card" style="text-decoration: none;" aria-label="Explore Websites & Animations service">
+          <div>
+            <div class="service-icon">
+              <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            </div>
+            <h3 class="service-card-title" data-i18n="service_4_title">Websites & Animations</h3>
+            <p class="service-card-desc" data-i18n="service_4_desc">SEO-friendly, ultra-fast loading business websites and immersive 3D/2D animation-heavy landing pages that convert.</p>
+          </div>
+          <div class="card-footer">
+            <span data-i18n="card_learn_more">Learn More</span>
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects" aria-label="Featured Projects">
+      <div class="section-header">
+        <span class="section-subtitle" data-i18n="projects_subtitle">Case Studies</span>
+        <h2 class="section-title" data-i18n="projects_title">Featured Projects</h2>
+        <p class="section-desc" data-i18n="projects_desc">Explore some of our real-world, cloud-deployed systems and applications built for performance, scale, and utility.</p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Project 1 Card -->
+        <article class="project-card">
+          <div class="project-image-wrapper">
+            <img src="./project 1/Screenshot 2026-06-07 072651.png" alt="Cloud Fee Management System Dashboard">
+          </div>
+          <div class="project-info">
+            <div class="project-meta">
+              <span class="project-category" data-i18n="project_1_category">Cloud SaaS / Finance</span>
+              <h3 class="project-title" data-i18n="project_1_title">Cloud Fee Management System</h3>
+              <p class="project-desc" data-i18n="project_1_desc">A comprehensive cloud financial management portal built to automate fee collection, invoice generation, and financial reporting for educational institutions.</p>
+            </div>
+            
+            <div class="project-tags">
+              <span class="project-tag">React</span>
+              <span class="project-tag">Node.js</span>
+              <span class="project-tag">Express</span>
+              <span class="project-tag">Cloud SQL</span>
+              <span class="project-tag">Tailwind</span>
+            </div>
+
+            <div class="project-footer">
+              <div class="project-creds">
+                <span data-i18n="project_demo_creds">Demo Login:</span><br>
+                <strong>test_admin</strong> / <strong>principal123</strong>
+              </div>
+              <a href="https://cloud-fee-management-system.vercel.app/login" target="_blank" class="contact-btn" style="padding: 0.6rem 1.4rem; font-size: 0.8rem;" aria-label="Launch Cloud Fee Management System Demo">Launch App</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2 Card -->
+        <article class="project-card">
+          <div class="project-image-wrapper">
+            <img src="./project 2/Screenshot 2026-06-07 073237.png" alt="Aura Academic Attendance System Dashboard">
+          </div>
+          <div class="project-info">
+            <div class="project-meta">
+              <span class="project-category" data-i18n="project_2_category">Academic SaaS</span>
+              <h3 class="project-title" data-i18n="project_2_title">Aura Academic Attendance System</h3>
+              <p class="project-desc" data-i18n="project_2_desc">A real-time student and staff attendance tracking platform built for high-performance recording, automated notifications, and reporting analytics.</p>
+            </div>
+            
+            <div class="project-tags">
+              <span class="project-tag">React</span>
+              <span class="project-tag">Vite</span>
+              <span class="project-tag">REST API</span>
+              <span class="project-tag">Express</span>
+              <span class="project-tag">Node.js</span>
+            </div>
+
+            <div class="project-footer">
+              <div class="project-creds">
+                <span data-i18n="project_demo_creds">Demo Login:</span><br>
+                <strong>testadmin@aura.edu</strong> / <strong>Test123</strong>
+              </div>
+              <a href="https://attendance-web-pied.vercel.app/" target="_blank" class="contact-btn" style="padding: 0.6rem 1.4rem; font-size: 0.8rem;" aria-label="Launch Aura Academic Attendance System Demo">Launch App</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section" aria-label="Key Agency Statistics">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <h3>50+</h3>
+          <p data-i18n="stat_projects">Projects Completed</p>
+        </div>
+        <div class="stat-item">
+          <h3>99%</h3>
+          <p data-i18n="stat_satisfaction">Client Satisfaction</p>
+        </div>
+        <div class="stat-item">
+          <h3>24/7</h3>
+          <p data-i18n="stat_support">Live System Monitoring</p>
+        </div>
+        <div class="stat-item">
+          <h3>15x</h3>
+          <p data-i18n="stat_conversion">Conversion Multiplier</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact" aria-label="Contact Us">
+      <div class="contact-container">
+        <div class="contact-info">
+          <h2 data-i18n="contact_title">Start Your Project</h2>
+          <p data-i18n="contact_desc">Ready to scale your business with custom software, AI solutions, or immersive websites? Fill out the form and our tech lead will get back to you within 24 hours.</p>
+          
+          <div class="info-item">
+            <div class="info-icon">
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </div>
+            <div>
+              <strong style="display: block; font-size: 0.8rem; color: var(--text-secondary);" data-i18n="contact_email_label">EMAIL US</strong>
+              <a href="mailto:sameerabdullah930@gmail.com" style="color: var(--text-primary); text-decoration: none; transition: var(--transition-fast);" onmouseover="this.style.color='var(--accent-cyan)'" onmouseout="this.style.color='var(--text-primary)'">sameerabdullah930@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon">
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+              </svg>
+            </div>
+            <div>
+              <strong style="display: block; font-size: 0.8rem; color: var(--text-secondary);" data-i18n="contact_whatsapp_label">WHATSAPP US</strong>
+              <a href="https://wa.me/923495999656" target="_blank" style="color: var(--text-primary); text-decoration: none; transition: var(--transition-fast);" onmouseover="this.style.color='var(--accent-cyan)'" onmouseout="this.style.color='var(--text-primary)'">+92 349 5999656</a>
+            </div>
+          </div>
+
+          <div class="info-item">
+            <div class="info-icon">
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+            <div>
+              <strong style="display: block; font-size: 0.8rem; color: var(--text-secondary);" data-i18n="contact_location_label">OUR BASE</strong>
+              <span>Global Remote / Digital Workspace</span>
+            </div>
+          </div>
+        </div>
+        
+        <form class="contact-form" onsubmit="event.preventDefault(); alert('Message sent successfully!');" aria-label="Project Launch Form">
+          <div class="form-group">
+            <label for="name" data-i18n="form_name">Your Name</label>
+            <input type="text" id="name" required placeholder="e.g. Ali Ahmed">
+          </div>
+          <div class="form-group">
+            <label for="email" data-i18n="form_email">Your Email</label>
+            <input type="email" id="email" required placeholder="e.g. ali@domain.com">
+          </div>
+          <div class="form-group">
+            <label for="message" data-i18n="form_message">Project Details</label>
+            <textarea id="message" rows="5" required placeholder="Describe what you want us to build..."></textarea>
+          </div>
+          <button type="submit" class="submit-btn" data-i18n="form_submit" aria-label="Submit project form">Launch Project</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 NexusTech. All rights reserved.</p>
+  </footer>
+
+  <!-- CDNs for ThreeJS, OrbitControls, GLTFLoader and GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  
+  <script src="main.js"></script>
+</body>
+</html>
