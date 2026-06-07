@@ -703,7 +703,7 @@ window.addEventListener("load", () => {
 // 4. GOOGLE SHEETS FORM SUBMISSION
 // ==========================================
 // Replace this with your Google Apps Script Web App URL after deployment
-const GOOGLE_SHEET_SCRIPT_URL = ""; 
+const GOOGLE_SHEET_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDyLumlYF7W-o_nqzcUENdrDBdPqdyrpfq07-xMTJv7vkiNTf4b8iRAgAgVxfAMj34/exec"; 
 
 const contactForm = document.getElementById("contact-form");
 if (contactForm) {
